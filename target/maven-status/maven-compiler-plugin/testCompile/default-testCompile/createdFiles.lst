@@ -1,0 +1,6 @@
+com\alex\payroll\analytics\PayrollAnalyticsTest.class
+com\alex\payroll\model\EmployeeTest.class
+com\alex\payroll\bank\AccountConcurrencyTest.class
+com\alex\payroll\processing\PayrollProcessorTest.class
+com\alex\payroll\processing\PayrollProcessorTest$FakeGateway.class
+com\alex\payroll\TestMoney.class

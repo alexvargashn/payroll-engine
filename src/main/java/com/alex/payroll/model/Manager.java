@@ -13,7 +13,7 @@ import java.util.List;
  *  - addReport rejects null, itself and duplicates with IllegalArgumentException
  *  - reports() must not expose the internal mutable list
  */
-public class Manager extends SalariedEmployee {
+public final class Manager extends SalariedEmployee {
 
     public Manager(String id, String name, LocalDate hiredOn, BigDecimal monthlySalary, BigDecimal bonusPerReport) {
         super(id, name, hiredOn, monthlySalary);

@@ -1,0 +1,44 @@
+-------------------------------------------------------------------------------
+Test set: com.alex.payroll.bank.AccountConcurrencyTest
+-------------------------------------------------------------------------------
+Tests run: 5, Failures: 0, Errors: 5, Skipped: 0, Time elapsed: 0.015 s <<< FAILURE! -- in com.alex.payroll.bank.AccountConcurrencyTest
+com.alex.payroll.bank.AccountConcurrencyTest.transferFailsWithoutChangingBalancesWhenFundsAreShort -- Time elapsed: 0.008 s <<< ERROR!
+java.lang.UnsupportedOperationException: TODO
+	at com.alex.payroll.bank.Account.<init>(Account.java:17)
+	at com.alex.payroll.bank.AccountConcurrencyTest.transferFailsWithoutChangingBalancesWhenFundsAreShort(AccountConcurrencyTest.java:91)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+
+com.alex.payroll.bank.AccountConcurrencyTest.transfersInOppositeDirectionsDoNotDeadlockAndConserveMoney -- Time elapsed: 0.001 s <<< ERROR!
+java.lang.UnsupportedOperationException: TODO
+	at com.alex.payroll.bank.Account.<init>(Account.java:17)
+	at com.alex.payroll.bank.AccountConcurrencyTest.transfersInOppositeDirectionsDoNotDeadlockAndConserveMoney(AccountConcurrencyTest.java:66)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+
+com.alex.payroll.bank.AccountConcurrencyTest.concurrentWithdrawalsNeverOverdraw -- Time elapsed: 0.001 s <<< ERROR!
+java.lang.UnsupportedOperationException: TODO
+	at com.alex.payroll.bank.Account.<init>(Account.java:17)
+	at com.alex.payroll.bank.AccountConcurrencyTest.concurrentWithdrawalsNeverOverdraw(AccountConcurrencyTest.java:51)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+
+com.alex.payroll.bank.AccountConcurrencyTest.concurrentDepositsAreNotLost -- Time elapsed: 0.002 s <<< ERROR!
+java.lang.UnsupportedOperationException: TODO
+	at com.alex.payroll.bank.Account.<init>(Account.java:17)
+	at com.alex.payroll.bank.AccountConcurrencyTest.concurrentDepositsAreNotLost(AccountConcurrencyTest.java:41)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+
+com.alex.payroll.bank.AccountConcurrencyTest.basicOperations -- Time elapsed: 0.001 s <<< ERROR!
+java.lang.UnsupportedOperationException: TODO
+	at com.alex.payroll.bank.Account.<init>(Account.java:17)
+	at com.alex.payroll.bank.AccountConcurrencyTest.basicOperations(AccountConcurrencyTest.java:28)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+

@@ -12,9 +12,14 @@ import java.time.LocalDate;
  *  - payeeId() returns id; amountDue() reuses monthlyPay() (consider making both final)
  *  - equals/hashCode by id only (two objects with the same id are the same employee)
  */
-public abstract class Employee implements Payable {
+public sealed abstract class Employee implements Payable permits SalariedEmployee, HourlyEmployee {
+
+    private final Integer id;
+    private final String name;
+    private final LocalDate hireOn;
 
     protected Employee(String id, String name, LocalDate hiredOn) {
+
         throw new UnsupportedOperationException("TODO");
     }
 

@@ -70,3 +70,7 @@ Agrega al final de este README una sección **Design notes** en inglés, de 5 a 
 | Streams | Collectors correctos, sin efectos secundarios dentro del stream |
 | Java moderno | Records, sealed, pattern matching donde aportan |
 | Explicación | Las design notes en inglés |
+
+## Notes
+1. The first that I did was to check it out the employee class and its derivaties, so and then I realize that the problems arround some clases, for example what clases needed to be declared as sealed or final.
+2. I try to compile frequently the project to seeing if the code runs and If I go well in my understanding

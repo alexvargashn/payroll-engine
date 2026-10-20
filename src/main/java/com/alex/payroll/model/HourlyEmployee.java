@@ -9,7 +9,7 @@ import java.time.LocalDate;
  *
  * TODO: hourlyRate must be positive; hoursWorked can be zero but not negative.
  */
-public class HourlyEmployee extends Employee {
+public final class HourlyEmployee extends Employee {
 
     public HourlyEmployee(String id, String name, LocalDate hiredOn, BigDecimal hourlyRate, BigDecimal hoursWorked) {
         super(id, name, hiredOn);

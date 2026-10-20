@@ -8,7 +8,8 @@ import java.math.BigDecimal;
  * TODO (Java 17): make it sealed so only Employee and Invoice can implement it.
  * That lets PayeeType.of(...) use an exhaustive switch with no default branch.
  */
-public interface Payable {
+public sealed interface Payable permits Employee, Invoice {
+
 
     /** Who receives the money: employee id or supplier id. */
     String payeeId();

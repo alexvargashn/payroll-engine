@@ -1,0 +1,16 @@
+C:\Users\avargas\Downloads\java-prep\payroll-engine\src\main\java\com\alex\payroll\analytics\PayrollAnalytics.java
+C:\Users\avargas\Downloads\java-prep\payroll-engine\src\main\java\com\alex\payroll\bank\Account.java
+C:\Users\avargas\Downloads\java-prep\payroll-engine\src\main\java\com\alex\payroll\bank\InsufficientFundsException.java
+C:\Users\avargas\Downloads\java-prep\payroll-engine\src\main\java\com\alex\payroll\bank\Transfers.java
+C:\Users\avargas\Downloads\java-prep\payroll-engine\src\main\java\com\alex\payroll\model\Employee.java
+C:\Users\avargas\Downloads\java-prep\payroll-engine\src\main\java\com\alex\payroll\model\HourlyEmployee.java
+C:\Users\avargas\Downloads\java-prep\payroll-engine\src\main\java\com\alex\payroll\model\Invoice.java
+C:\Users\avargas\Downloads\java-prep\payroll-engine\src\main\java\com\alex\payroll\model\Manager.java
+C:\Users\avargas\Downloads\java-prep\payroll-engine\src\main\java\com\alex\payroll\model\Payable.java
+C:\Users\avargas\Downloads\java-prep\payroll-engine\src\main\java\com\alex\payroll\model\PayeeType.java
+C:\Users\avargas\Downloads\java-prep\payroll-engine\src\main\java\com\alex\payroll\model\SalariedEmployee.java
+C:\Users\avargas\Downloads\java-prep\payroll-engine\src\main\java\com\alex\payroll\model\Supplier.java
+C:\Users\avargas\Downloads\java-prep\payroll-engine\src\main\java\com\alex\payroll\processing\BankGateway.java
+C:\Users\avargas\Downloads\java-prep\payroll-engine\src\main\java\com\alex\payroll\processing\PaymentResult.java
+C:\Users\avargas\Downloads\java-prep\payroll-engine\src\main\java\com\alex\payroll\processing\PayrollProcessor.java
+C:\Users\avargas\Downloads\java-prep\payroll-engine\src\main\java\com\alex\payroll\processing\PayrollReport.java

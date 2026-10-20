@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 /** Fixed monthly salary. TODO: salary must be positive. */
-public class SalariedEmployee extends Employee {
+public sealed class SalariedEmployee extends Employee permits Manager {
 
     public SalariedEmployee(String id, String name, LocalDate hiredOn, BigDecimal monthlySalary) {
         super(id, name, hiredOn);
