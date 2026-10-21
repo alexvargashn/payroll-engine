@@ -42,7 +42,7 @@ public final class Account {
         return this.id;
     }
 
-    public ReentrantLock lock() {
+    ReentrantLock lock() {
         return this.lock;
     }
 
