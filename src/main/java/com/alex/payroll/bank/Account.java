@@ -30,11 +30,24 @@ public final class Account {
     }
 
     public BigDecimal balance() {
-        return this.balance;
+        lock.lock();
+        try {
+            return this.balance;
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    public String id() {
+        return this.id;
+    }
+
+    public ReentrantLock lock() {
+        return this.lock;
     }
 
     public void deposit(BigDecimal amount) {
-        requirePositive(amount, "amount must be positive");
+        requireNonNegative(amount, "amount must be positive");
         lock.lock();
         try {
             this.balance = this.balance.add(amount);
@@ -60,6 +73,13 @@ public final class Account {
 
     private static BigDecimal requirePositive(BigDecimal amount, String message) {
         if(amount.compareTo(BigDecimal.ZERO) < 0) {
+            throw new IllegalArgumentException(message);
+        }
+        return amount;
+    }
+
+    private static BigDecimal requireNonNegative(BigDecimal amount, String message) {
+        if(amount.compareTo(BigDecimal.ZERO) <= 0) {
             throw new IllegalArgumentException(message);
         }
         return amount;

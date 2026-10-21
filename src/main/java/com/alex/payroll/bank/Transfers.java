@@ -20,15 +20,10 @@ public final class Transfers {
     public static void transfer(Account from, Account to, BigDecimal amount) {
         requirePositive(amount, "amount must be positive");
         requireSameAccount(from, to, "from and to must be different accounts");
-        lock.lock();
-        try {
-            if (!from.tryWithdraw(amount)) {
-                throw new InsufficientFundsException();
-            }
-            to.deposit(amount);
-        } finally {
-            lock.unlock();
+        if (!from.tryWithdraw(amount)) {
+         throw new InsufficientFundsException();
         }
+        to.deposit(amount);
     }
 
     private static BigDecimal requirePositive(BigDecimal amount, String message) {
