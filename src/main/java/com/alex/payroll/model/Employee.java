@@ -19,9 +19,9 @@ public sealed abstract class Employee implements Payable permits SalariedEmploye
     private final LocalDate hiredOn;
 
     protected Employee(String id, String name, LocalDate hiredOn) {
-       this.id = requiredTxt("id", id);
-       this.name = requiredTxt("name", name);
-       this.hiredOn = requiredDate(hiredOn);
+       this.id = Validations.requireText(id, "id");
+       this.name = Validations.requireText(name, "name");
+       this.hiredOn = Validations.requireDate(hiredOn, "hiredOn");
     }
 
     /** Each kind of employee is paid differently. */
@@ -50,18 +50,10 @@ public sealed abstract class Employee implements Payable permits SalariedEmploye
     }
 
     private String requiredTxt(String fieldName, String fieldValue) {
-        if  (fieldValue == null || fieldValue.isEmpty()) {
+        if  (fieldValue == null || fieldValue.isBlank()) {
             throw new IllegalArgumentException(fieldName + " cannot be null or empty");
         }
 
         return fieldValue;
-    }
-
-    private  LocalDate requiredDate(LocalDate date) {
-        if (date == null) {
-            throw new NullPointerException("date cannot be null");
-        }
-
-        return date;
     }
 }

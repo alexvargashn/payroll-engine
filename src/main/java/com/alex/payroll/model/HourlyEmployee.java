@@ -1,6 +1,7 @@
 package com.alex.payroll.model;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 
 /**
@@ -11,13 +12,35 @@ import java.time.LocalDate;
  */
 public final class HourlyEmployee extends Employee {
 
+    private final BigDecimal HOURLY_ABOVE_RATE = new BigDecimal("1.5");
+    private final BigDecimal HOURS_STANDARD_RATE = new BigDecimal("160");
+
+    private final BigDecimal hourlyRate;
+    private final BigDecimal hoursWorked;
+
+
     public HourlyEmployee(String id, String name, LocalDate hiredOn, BigDecimal hourlyRate, BigDecimal hoursWorked) {
         super(id, name, hiredOn);
-        throw new UnsupportedOperationException("TODO");
+        this.hourlyRate = Validations.requirePositive(hourlyRate, "hourlyRate");
+        this.hoursWorked = Validations.requireNonNegative(hoursWorked, "hoursWorked");
     }
 
     @Override
     public BigDecimal monthlyPay() {
-        throw new UnsupportedOperationException("TODO");
+        BigDecimal hoursStandard =  hoursWorked;
+        BigDecimal monthlyPay = BigDecimal.ZERO;
+        BigDecimal hoursAbove = BigDecimal.ZERO;
+
+        if(hoursWorked.subtract(HOURS_STANDARD_RATE).compareTo(BigDecimal.ZERO) > 0) {
+            hoursAbove = hoursWorked.subtract(HOURS_STANDARD_RATE);
+            hoursStandard = hoursWorked.subtract(hoursAbove);
+        }
+
+        if(hoursAbove.compareTo(BigDecimal.ZERO) > 0) {
+            monthlyPay = hoursAbove.multiply(hourlyRate).multiply(HOURLY_ABOVE_RATE);
+        }
+
+        monthlyPay = monthlyPay.add(hoursStandard.multiply(hourlyRate));
+        return monthlyPay.setScale(2, RoundingMode.HALF_EVEN);
     }
 }
