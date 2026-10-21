@@ -6,10 +6,8 @@ import com.alex.payroll.model.Manager;
 import com.alex.payroll.model.Payable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
-import java.util.SortedMap;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /** Reports with streams and collectors. No loops allowed: that is the point of the exercise. */
 public final class PayrollAnalytics {
@@ -23,12 +21,19 @@ public final class PayrollAnalytics {
                 .reduce(BigDecimal.ZERO, BigDecimal::add);  // now everything is BigDecimal
     }
     public static Optional<Employee> highestPaid(Collection<? extends Employee> employees) {
-        throw new UnsupportedOperationException("TODO");
+        return employees.stream()
+                .max(Comparator.comparing(Employee::monthlyPay))
+                .map(e -> e);
     }
 
     /** Year -> employee ids, years ascending, ids sorted inside each year. */
     public static SortedMap<Integer, List<String>> employeeIdsByHireYear(Collection<? extends Employee> employees) {
-        throw new UnsupportedOperationException("TODO");
+        return employees.stream()
+                .sorted(Comparator.comparing(Employee::id))
+                .collect(Collectors.groupingBy(
+                        e -> e.hiredOn().getYear(),
+                        TreeMap::new,
+                        Collectors.mapping(Employee::id, Collectors.toList())));
     }
 
     /** Manager id -> manager pay + pay of every report, sorted by manager id. */

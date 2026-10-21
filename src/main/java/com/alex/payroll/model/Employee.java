@@ -13,7 +13,7 @@ import java.util.Objects;
  *  - payeeId() returns id; amountDue() reuses monthlyPay() (consider making both final) Done ✅
  *  - equals/hashCode by id only (two objects with the same id are the same employee)
  */
-public sealed abstract class Employee implements Payable permits SalariedEmployee, HourlyEmployee {
+public abstract sealed class Employee implements Payable permits SalariedEmployee, HourlyEmployee {
 
     private final String id;
     private final String name;
