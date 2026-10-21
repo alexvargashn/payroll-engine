@@ -2,6 +2,7 @@ package com.alex.payroll.bank;
 
 import java.math.BigDecimal;
 import java.util.Objects;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Company bank account shared by many threads.
@@ -17,11 +18,13 @@ public final class Account {
     private final String id;
     private BigDecimal balance;
 
+    private final ReentrantLock lock = new ReentrantLock();
+
     public Account(String id, BigDecimal initialBalance) {
         this.id = requireNonEmpty(
             Objects.requireNonNull(id, "id must not be null"),
              "id must not be empty");
-        this.balance = requireNonNegative(
+        this.balance = requirePositive(
             Objects.requireNonNull(initialBalance, "initialBalance must not be null"),
             "initialBalance must not be negative");
     }
@@ -31,26 +34,32 @@ public final class Account {
     }
 
     public void deposit(BigDecimal amount) {
-        if (amount.compareTo(BigDecimal.ZERO) <= 0) {
-            throw new IllegalArgumentException("Amount must be positive");
+        requirePositive(amount, "amount must be positive");
+        lock.lock();
+        try {
+            this.balance = this.balance.add(amount);
+        } finally {
+            lock.unlock();
         }
-        this.balance = this.balance.add(amount);
     }
 
     /** Withdraws and returns true only if the balance is enough; never leaves it negative. */
     public boolean tryWithdraw(BigDecimal amount) {
-        if (amount.compareTo(BigDecimal.ZERO) <= 0) {
-            throw new IllegalArgumentException("Amount must be positive");
+        requirePositive(amount, "amount must be positive");
+        lock.lock();
+        try {
+            if (this.balance.compareTo(amount) < 0) {
+                return false;
+            }
+            this.balance = this.balance.subtract(amount);
+            return true;
+        } finally {
+            lock.unlock();
         }
-        if (this.balance.compareTo(amount) < 0) {
-            return false;
-        }
-        this.balance = this.balance.subtract(amount);
-        return true;
     }
 
-    private static BigDecimal requireNonNegative(BigDecimal amount, String message) {
-        if(amount.compareTo(BigDecimal.ZERO) <= 0) {
+    private static BigDecimal requirePositive(BigDecimal amount, String message) {
+        if(amount.compareTo(BigDecimal.ZERO) < 0) {
             throw new IllegalArgumentException(message);
         }
         return amount;
