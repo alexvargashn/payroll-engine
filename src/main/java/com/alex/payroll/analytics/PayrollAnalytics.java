@@ -38,11 +38,21 @@ public final class PayrollAnalytics {
 
     /** Manager id -> manager pay + pay of every report, sorted by manager id. */
     public static SortedMap<String, BigDecimal> teamCostByManager(Collection<Manager> managers) {
-        throw new UnsupportedOperationException("TODO");
+        return managers.stream()
+                .collect(Collectors.toMap(
+                        Manager::id,
+                        m -> m.monthlyPay().add(totalDue(m.reports())),
+                        (a,b) -> a,
+                        TreeMap::new));
     }
 
     /** Due before today, oldest due date first; same date -> larger amount first. */
     public static List<Invoice> overdueInvoices(Collection<Invoice> invoices, LocalDate today) {
-        throw new UnsupportedOperationException("TODO");
+        return invoices.stream()
+                .filter(i -> i.dueDate().isBefore(today))
+                .sorted(Comparator.comparing(Invoice::dueDate)
+                    .reversed()
+                    .thenComparing(Invoice::amountDue).reversed())
+                .toList();
     }
 }
