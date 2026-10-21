@@ -7,20 +7,21 @@ import java.time.LocalDate;
  * Common state and behavior of every employee.
  *
  * TODO:
- *  - private final fields: id, name, hiredOn
- *  - validate in the constructor: id and name not blank, hiredOn not null -> IllegalArgumentException / NPE
+ *  - private final fields: id, name, hiredOn - Done✅
+ *  - validate in the constructor: id and name not blank, hiredOn not null -> IllegalArgumentException / NPE - Done✅
  *  - payeeId() returns id; amountDue() reuses monthlyPay() (consider making both final)
  *  - equals/hashCode by id only (two objects with the same id are the same employee)
  */
 public sealed abstract class Employee implements Payable permits SalariedEmployee, HourlyEmployee {
 
-    private final Integer id;
+    private final String id;
     private final String name;
-    private final LocalDate hireOn;
+    private final LocalDate hiredOn;
 
     protected Employee(String id, String name, LocalDate hiredOn) {
-
-        throw new UnsupportedOperationException("TODO");
+       this.id = requiredTxt("id", id);
+       this.name = requiredTxt("name", name);
+       this.hiredOn = requiredDate(hiredOn);
     }
 
     /** Each kind of employee is paid differently. */
@@ -28,12 +29,12 @@ public sealed abstract class Employee implements Payable permits SalariedEmploye
 
     @Override
     public String payeeId() {
-        throw new UnsupportedOperationException("TODO");
+        return this.id;
     }
 
     @Override
     public BigDecimal amountDue() {
-        throw new UnsupportedOperationException("TODO");
+        return this.monthlyPay();
     }
 
     public String id() {
@@ -46,5 +47,21 @@ public sealed abstract class Employee implements Payable permits SalariedEmploye
 
     public LocalDate hiredOn() {
         throw new UnsupportedOperationException("TODO");
+    }
+
+    private String requiredTxt(String fieldName, String fieldValue) {
+        if  (fieldValue == null || fieldValue.isEmpty()) {
+            throw new IllegalArgumentException(fieldName + " cannot be null or empty");
+        }
+
+        return fieldValue;
+    }
+
+    private  LocalDate requiredDate(LocalDate date) {
+        if (date == null) {
+            throw new NullPointerException("date cannot be null");
+        }
+
+        return date;
     }
 }
