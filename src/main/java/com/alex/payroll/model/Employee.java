@@ -2,6 +2,7 @@ package com.alex.payroll.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Objects;
 
 /**
  * Common state and behavior of every employee.
@@ -9,7 +10,7 @@ import java.time.LocalDate;
  * TODO:
  *  - private final fields: id, name, hiredOn - Done✅
  *  - validate in the constructor: id and name not blank, hiredOn not null -> IllegalArgumentException / NPE - Done✅
- *  - payeeId() returns id; amountDue() reuses monthlyPay() (consider making both final)
+ *  - payeeId() returns id; amountDue() reuses monthlyPay() (consider making both final) Done ✅
  *  - equals/hashCode by id only (two objects with the same id are the same employee)
  */
 public sealed abstract class Employee implements Payable permits SalariedEmployee, HourlyEmployee {
@@ -28,32 +29,38 @@ public sealed abstract class Employee implements Payable permits SalariedEmploye
     public abstract BigDecimal monthlyPay();
 
     @Override
-    public String payeeId() {
+    public final String payeeId() {
         return this.id;
     }
 
     @Override
-    public BigDecimal amountDue() {
+    public final BigDecimal amountDue() {
         return this.monthlyPay();
     }
 
     public String id() {
-        throw new UnsupportedOperationException("TODO");
+        return this.id;
     }
 
     public String name() {
-        throw new UnsupportedOperationException("TODO");
+        return this.name;
     }
 
     public LocalDate hiredOn() {
-        throw new UnsupportedOperationException("TODO");
+        return this.hiredOn;
     }
 
-    private String requiredTxt(String fieldName, String fieldValue) {
-        if  (fieldValue == null || fieldValue.isBlank()) {
-            throw new IllegalArgumentException(fieldName + " cannot be null or empty");
-        }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
 
-        return fieldValue;
+        if(!(o instanceof Employee employee)) { return false; }
+
+        return this.id().equals(employee.id());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.id);
     }
 }

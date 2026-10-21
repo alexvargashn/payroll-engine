@@ -18,7 +18,7 @@ import java.util.Objects;
 public final class Manager extends SalariedEmployee {
 
     private final BigDecimal bonusPerReport;
-    private List<Employee> employees = new ArrayList<>();
+    private final List<Employee> employees = new ArrayList<>();
 
     public Manager(String id, String name, LocalDate hiredOn, BigDecimal monthlySalary, BigDecimal bonusPerReport) {
         super(id, name, hiredOn, monthlySalary);
@@ -38,7 +38,7 @@ public final class Manager extends SalariedEmployee {
 
     @Override
     public BigDecimal monthlyPay() {
-        BigDecimal plus = new BigDecimal(this.employees.size());
-        return this.monthlySalary.add(bonusPerReport.multiply(plus));
+        BigDecimal reportCount = new BigDecimal(this.employees.size());
+        return super.monthlyPay().add(bonusPerReport.multiply(reportCount));
     }
 }

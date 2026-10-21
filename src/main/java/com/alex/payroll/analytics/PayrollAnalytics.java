@@ -18,9 +18,10 @@ public final class PayrollAnalytics {
     }
 
     public static BigDecimal totalDue(Collection<? extends Payable> payables) {
-        throw new UnsupportedOperationException("TODO");
+        return payables.stream()
+                .map(Payable::amountDue)                    // Stream<Payable> -> Stream<BigDecimal>
+                .reduce(BigDecimal.ZERO, BigDecimal::add);  // now everything is BigDecimal
     }
-
     public static Optional<Employee> highestPaid(Collection<? extends Employee> employees) {
         throw new UnsupportedOperationException("TODO");
     }

@@ -6,6 +6,9 @@ public enum PayeeType {
 
     /** TODO: pattern matching switch over Payable (exhaustive once Payable is sealed). */
     public static PayeeType of(Payable payable) {
-        throw new UnsupportedOperationException("TODO");
+        return switch (payable) {
+            case Employee e -> EMPLOYEE;
+            case Invoice i  -> SUPPLIER;
+        };
     }
 }

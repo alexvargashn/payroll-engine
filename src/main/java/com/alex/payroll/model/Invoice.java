@@ -7,20 +7,20 @@ import java.util.Objects;
 /** TODO: validate (amount positive, supplier and dueDate required) and implement Payable. */
 public record Invoice(String number, Supplier supplier, BigDecimal amount, LocalDate dueDate) implements Payable {
 
-    public Invoice(String number, Supplier supplier, BigDecimal amount, LocalDate dueDate) {
-        this.number = number;
-        this.supplier = Objects.requireNonNull(supplier, "The supplier must not be null");
-        this.amount = Validations.requirePositive(amount, "amount");
-        this.dueDate = Validations.requireDate(dueDate, "dueDate");
+    public Invoice {
+        Validations.requireText(number, "number");
+        Objects.requireNonNull(supplier, "The supplier must not be null");
+        Validations.requirePositive(amount, "amount");
+        Validations.requireDate(dueDate, "dueDate");
     }
 
     @Override
     public String payeeId() {
-        throw new UnsupportedOperationException("TODO");
+        return this.supplier.id();
     }
 
     @Override
     public BigDecimal amountDue() {
-        throw new UnsupportedOperationException("TODO");
+        return this.amount;
     }
 }

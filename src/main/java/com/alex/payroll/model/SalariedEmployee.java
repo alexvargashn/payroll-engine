@@ -6,7 +6,7 @@ import java.time.LocalDate;
 /** Fixed monthly salary. TODO: salary must be positive. Done ✅ */
 public sealed class SalariedEmployee extends Employee permits Manager {
 
-    protected final BigDecimal monthlySalary;
+    private final BigDecimal monthlySalary;
 
     public SalariedEmployee(String id, String name, LocalDate hiredOn, BigDecimal monthlySalary) {
         super(id, name, hiredOn);
