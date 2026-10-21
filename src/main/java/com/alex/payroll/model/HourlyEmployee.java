@@ -12,8 +12,8 @@ import java.time.LocalDate;
  */
 public final class HourlyEmployee extends Employee {
 
-    private final BigDecimal HOURLY_ABOVE_RATE = new BigDecimal("1.5");
-    private final BigDecimal HOURS_STANDARD_RATE = new BigDecimal("160");
+    private static final BigDecimal OVERTIME_MULTIPLIER = new BigDecimal("1.5");
+    private static final BigDecimal STANDARD_HOURS = new BigDecimal("160");
 
     private final BigDecimal hourlyRate;
     private final BigDecimal hoursWorked;
@@ -27,20 +27,12 @@ public final class HourlyEmployee extends Employee {
 
     @Override
     public BigDecimal monthlyPay() {
-        BigDecimal hoursStandard =  hoursWorked;
-        BigDecimal monthlyPay = BigDecimal.ZERO;
-        BigDecimal hoursAbove = BigDecimal.ZERO;
+        BigDecimal regularHours = hoursWorked.min(STANDARD_HOURS);
+        BigDecimal overtimeHours = hoursWorked.subtract(STANDARD_HOURS).max(BigDecimal.ZERO);
 
-        if(hoursWorked.subtract(HOURS_STANDARD_RATE).compareTo(BigDecimal.ZERO) > 0) {
-            hoursAbove = hoursWorked.subtract(HOURS_STANDARD_RATE);
-            hoursStandard = hoursWorked.subtract(hoursAbove);
-        }
+        BigDecimal regularPay = regularHours.multiply(hourlyRate);
+        BigDecimal overtimePay = overtimeHours.multiply(hourlyRate).multiply(OVERTIME_MULTIPLIER);
 
-        if(hoursAbove.compareTo(BigDecimal.ZERO) > 0) {
-            monthlyPay = hoursAbove.multiply(hourlyRate).multiply(HOURLY_ABOVE_RATE);
-        }
-
-        monthlyPay = monthlyPay.add(hoursStandard.multiply(hourlyRate));
-        return monthlyPay.setScale(2, RoundingMode.HALF_EVEN);
+        return regularPay.add(overtimePay).setScale(2, RoundingMode.HALF_EVEN);
     }
 }

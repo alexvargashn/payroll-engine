@@ -4,11 +4,11 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public final class Validations {
+final class Validations {
     private Validations() {}
 
     static String requireText(String value, String field) {
-        if  (field == null || value.isBlank()) {
+        if  (value == null || value.isBlank()) {
             throw new IllegalArgumentException(field + " cannot be null or empty");
         }
 
@@ -16,7 +16,8 @@ public final class Validations {
     }
 
     static BigDecimal requirePositive(BigDecimal value, String field) {
-        if(value.compareTo(BigDecimal.ZERO) <= 0) {
+        if(Objects.requireNonNull(value, field + " must not be null")
+                .compareTo(BigDecimal.ZERO) <= 0) {
             throw new  IllegalArgumentException("The " + field + " must be greater than zero");
         }
 
@@ -24,11 +25,12 @@ public final class Validations {
     }
 
     static LocalDate requireDate(LocalDate date, String field) {
-        return Objects.requireNonNull(date, field + "must not be null");
+        return Objects.requireNonNull(date, field + " must not be null");
     }
 
     static BigDecimal requireNonNegative(BigDecimal value, String field) {
-        if(value.compareTo(BigDecimal.ZERO) >= 0) {
+        if(Objects.requireNonNull(value, field + " must not be null")
+                .compareTo(BigDecimal.ZERO) >= 0) {
             return value;
         }
 
