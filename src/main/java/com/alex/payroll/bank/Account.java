@@ -1,6 +1,7 @@
 package com.alex.payroll.bank;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 /**
  * Company bank account shared by many threads.
@@ -13,24 +14,52 @@ import java.math.BigDecimal;
  */
 public final class Account {
 
-    public Account(String id, BigDecimal initialBalance) {
-        throw new UnsupportedOperationException("TODO");
-    }
+    private final String id;
+    private BigDecimal balance;
 
-    public String id() {
-        throw new UnsupportedOperationException("TODO");
+    public Account(String id, BigDecimal initialBalance) {
+        this.id = requireNonEmpty(
+            Objects.requireNonNull(id, "id must not be null"),
+             "id must not be empty");
+        this.balance = requireNonNegative(
+            Objects.requireNonNull(initialBalance, "initialBalance must not be null"),
+            "initialBalance must not be negative");
     }
 
     public BigDecimal balance() {
-        throw new UnsupportedOperationException("TODO");
+        return this.balance;
     }
 
     public void deposit(BigDecimal amount) {
-        throw new UnsupportedOperationException("TODO");
+        if (amount.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("Amount must be positive");
+        }
+        this.balance = this.balance.add(amount);
     }
 
     /** Withdraws and returns true only if the balance is enough; never leaves it negative. */
     public boolean tryWithdraw(BigDecimal amount) {
-        throw new UnsupportedOperationException("TODO");
+        if (amount.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("Amount must be positive");
+        }
+        if (this.balance.compareTo(amount) < 0) {
+            return false;
+        }
+        this.balance = this.balance.subtract(amount);
+        return true;
+    }
+
+    private static BigDecimal requireNonNegative(BigDecimal amount, String message) {
+        if(amount.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException(message);
+        }
+        return amount;
+    }
+
+    private static String requireNonEmpty(String value, String message) {
+        if(value.isEmpty()) {
+            throw new IllegalArgumentException(message);
+        }
+        return value;
     }
 }

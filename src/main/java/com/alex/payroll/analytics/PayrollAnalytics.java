@@ -51,8 +51,7 @@ public final class PayrollAnalytics {
         return invoices.stream()
                 .filter(i -> i.dueDate().isBefore(today))
                 .sorted(Comparator.comparing(Invoice::dueDate)
-                    .reversed()
-                    .thenComparing(Invoice::amountDue).reversed())
+                    .thenComparing(Invoice::amountDue, Comparator.reverseOrder()))
                 .toList();
     }
 }
